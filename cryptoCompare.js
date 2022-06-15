@@ -1,26 +1,40 @@
-require('dotenv').config();
+require('dotenv').config()
 
-const axios = require('axios');
-const api_key = process.env.CRYPTO_COMPARE_API_TOKEN
+const axios = require('axios')
+const apiKey = process.env.CRYPTO_COMPARE_API_TOKEN
+const BASE_URL = 'https://min-api.cryptocompare.com/data'
+const TOKENS = ['BTC', 'ETH', 'XRP']
+const CURRENCY = 'USD'
 
-const getLatestUSDPrice = async () => {
-    var url = `https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,XRP&tsyms=USD&api_key=${api_key}`
-    try {
-        const {data:response} = await axios.get(url) //use data destructuring to get data from the promise object
-        return response
-    }
-        catch (error) {
-        console.log(error);
-    }
+/*
+    Returns price of a cryptocurrency from https://www.cryptocompare.com/
+    token * time_stamp are optional parameters
+*/
+const getCurrencyPrice = async (token, timeStamp) => {
+  // Gets price of a token from a specific date
+  let requestType = 'pricehistorical'
+  if (!timeStamp) {
+    // Gets latest price of a token/s
+    requestType = 'pricemulti'
+  }
+
+  const url = `${BASE_URL}/${requestType}?`
+  const params = new URLSearchParams({
+    fsyms: TOKENS,
+    fsym: token,
+    tsyms: CURRENCY,
+    ts: timeStamp,
+    api_key: apiKey
+  })
+
+  try {
+    const { data: response } = await axios.get(url, { params }) // use data destructuring to get data from the promise object
+    return response
+  } catch (error) {
+    console.log(error)
+  }
 }
 
-const getDateUSDPrice = async (token, time_stamp) => {
-    var url = `https://min-api.cryptocompare.com/data/pricehistorical?fsym=${token}&tsyms=USD&ts=${time_stamp}&api_key=${api_key}`
-    const response = await axios.get(url)
-    return response.data
-}   
-
 module.exports = {
-    getDateUSDPrice,
-    getLatestUSDPrice
+  getCurrencyPrice
 }
