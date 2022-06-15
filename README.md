@@ -24,13 +24,29 @@ token - currently limited to BTC, ETH, XRP
 
 **Examples**
 1. Given a date and a token, return the portfolio value of that token in USD on that date. <br />
-```node .\index.js --date=5/5/2018 --token=BTC```
+```
+node .\index.js --date=10/25/2019 --token=BTC
+$ BTC: 75891.28896539999 USD
+```
 
 2. Given a date, return the portfolio value per token in USD on that date. <br />
-```node .\index.js --date=5/5/2018```
+```
+node .\index.js --date=10/25/2019
+$ BTC: 75891.28896539999 USD
+$ ETH: 759.48126278 USD
+$ XRP: 0.21888446579999993 USD
+```
 
 3. Given a token, return the latest portfolio value for that token in USD. <br />
-```node .\index.js --token=BTC```
+```
+node .\index.js --token=BTC
+$ BTC: 216848.94434585996 USD
+```
 
 4. Given no parameters, return the latest portfolio value per token in USD. <br />
-```node .\index.js```
+```
+node .\index.js
+$ BTC: 216239.81179760996 USD
+$ ETH: 5253.684042649999 USD
+$ XRP: 0.24512846819999992 USD
+```
