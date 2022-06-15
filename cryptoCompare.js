@@ -1,5 +1,7 @@
-const api_key = "c242cd5cac2466c97c279c6d3c6dbf997cd4ebb0de434b8c45de57e702a85a24"
+require('dotenv').config();
+
 const axios = require('axios');
+const api_key = process.env.CRYPTO_COMPARE_API_TOKEN
 
 const getLatestUSDPrice = async () => {
     var url = `https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,XRP&tsyms=USD&api_key=${api_key}`
