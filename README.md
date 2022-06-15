@@ -18,8 +18,8 @@ The CSV file has the following columns
 2. Install the dependecies from package.json
 
 # Usage
-The project has 2 optional parameters.
-date - format is M/D/Y
+The project has 2 optional parameters. <br />
+date - format is M/D/Y <br />
 token - currently limited to BTC, ETH, XRP
 
 **Examples**
