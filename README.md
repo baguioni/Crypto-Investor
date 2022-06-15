@@ -18,7 +18,7 @@ The CSV file has the following columns
 2. Install the dependecies from package.json
 
 # Usage
-The project has 2 optional parameters. <br />
+The solution has 2 optional parameters. <br />
 date - format is M/D/Y <br />
 token - currently limited to BTC, ETH, XRP
 
@@ -50,3 +50,12 @@ $ BTC: 216239.81179760996 USD
 $ ETH: 5253.684042649999 USD
 $ XRP: 0.24512846819999992 USD
 ```
+
+# Design Decisions
+The solution was could have been made in a single file. However, for maintainability, it was spread accross multiple files and functions. Each file/functions aims to solve a specific sub-problem.
+
+The problem requires 2 specific tasks to be solved. Reading data from the csv file and pulling crypto prices from an api provider. 
+
+1. Reading data from the csv file. Considering the size of the file, simply loading and processing it in memory would fail. Instead, Node.js streams was utilized to incrementally process the large csv. While processing the csv, the solution keeps track of the total amount of each token. A "WITHDRAWAL" transaction is subtracting from the amount and "DEPOSIT" is adding to the amount.
+
+2. Pulling crypto prices. After the total amount of the token/s is determined, the solution pulls price data from https://min-api.cryptocompare.com/. Axios was used to make this request. Prices are then multiplied with the amount to determine the total value of a token.
