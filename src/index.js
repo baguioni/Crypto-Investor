@@ -1,6 +1,7 @@
 const transactions = require('./transaction')
 const cryptoCompare = require('./cryptoCompare')
 const yargs = require('yargs').argv
+const TOKENS = ['BTC', 'ETH', 'XRP']
 
 const token = yargs.token
 const date = yargs.date
@@ -12,9 +13,8 @@ const displayToken = (tokenPrices) => {
   }
 }
 
-transactions.calculateTokenAmount(date).then((amount) => {
+const displayTokenPrice = (amount, token, timeStamp) => {
   const tokenPrices = {}
-
   cryptoCompare.getCurrencyPrice(token, timeStamp).then((price) => {
     for (const [key, value] of Object.entries(price)) {
       tokenPrices[key] = amount[key] * value.USD
@@ -25,4 +25,14 @@ transactions.calculateTokenAmount(date).then((amount) => {
       displayToken(tokenPrices)
     }
   })
+}
+
+transactions.calculateTokenAmount(date).then((amount) => {
+  if (timeStamp && token == undefined) {
+    for (const coin of TOKENS) {
+      displayTokenPrice(amount, coin, timeStamp)
+    }
+  } else {
+    displayTokenPrice(amount, token, timeStamp)
+  }
 })
