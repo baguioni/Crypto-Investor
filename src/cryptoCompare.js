@@ -12,11 +12,7 @@ const CURRENCY = 'USD'
 */
 const getCurrencyPrice = async (token, timeStamp) => {
   // Gets price of a token from a specific date
-  let requestType = 'pricehistorical'
-  if (!timeStamp) {
-    // Gets latest price of a token/s
-    requestType = 'pricemulti'
-  }
+  const requestType = timeStamp? 'pricehistorical': 'pricemulti'
 
   const url = `${BASE_URL}/${requestType}?`
   const params = new URLSearchParams({
